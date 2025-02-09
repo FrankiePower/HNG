@@ -1,42 +1,186 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   padding: 2rem;
+}
+
+.title {
   text-align: center;
+  color: #2d3436;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+[data-testid="gameInstructions"] {
+  text-align: center;
+  color: #636e72;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
-@keyframes logo-spin {
+[data-testid="colorBox"] {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+[data-testid="colorOption"] {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+[data-testid="colorOption"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-testid="gameStatus"] {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  min-height: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.game-status-correct {
+  color: #27ae60;
+}
+
+.game-status-wrong {
+  color: #e74c3c;
+}
+
+.game-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+[data-testid="score"] {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+[data-testid="newGameButton"] {
+  background-color: #0984e3;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+[data-testid="newGameButton"]:hover {
+  background-color: #0873c7;
+}
+
+/* Animations */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@keyframes celebration {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
-.card {
-  padding: 2em;
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
-.read-the-docs {
-  color: #888;
+[data-testid="colorBox"] {
+  animation: fadeIn 0.5s ease-in;
+}
+
+[data-testid="gameStatus"]:not(:empty) {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.correct-guess [data-testid="colorBox"] {
+  animation: celebration 0.5s ease-in-out;
+}
+
+.wrong-guess [data-testid="colorBox"] {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .game-container {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  [data-testid="colorBox"] {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .color-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  [data-testid="newGameButton"] {
+    padding: 0.6rem 1.2rem;
+  }
 }
